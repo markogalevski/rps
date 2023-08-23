@@ -92,7 +92,6 @@ function update_score() {
 		msg = `${user_score} - ${computer_score}`;
 	}
 	score.textContent = msg;
-	score.style.fontSize = "140px";
   return game_state;
 }
 
