@@ -55,7 +55,6 @@ function evaluate_round(user_choice, computer_choice) {
 }
 
 function one_round(user_choice) {
-	console.log(user_choice);
 	let computer_choice = get_computer_choice();
 	switch (evaluate_round(user_choice, computer_choice))
 	{			
@@ -83,14 +82,15 @@ function one_round(user_choice) {
 function update_score() {
 	let msg;
 	let game_state = game_status.RUNNING;
+	const score = document.querySelector('.score');
 	if (user_score === 3 || computer_score === 3) {
 		msg = (user_score > computer_score) ? "YOU WIN! 🏆" : "THE COMPUTER WINS! 👾";
 		game_state = game_status.OVER;
 	}
 	else {
+		score.classList.add('update');
 		msg = `${user_score} - ${computer_score}`;
 	}
-	const score = document.querySelector('.score');
 	score.textContent = msg;
 	score.style.fontSize = "140px";
   return game_state;
@@ -122,4 +122,10 @@ function link_methods() {
 	paper.addEventListener('click', play_paper);
 	const scissors = document.querySelector('#scissors');
 	scissors.addEventListener('click', play_scissors);
+	const score = document.querySelector('.score');
+	score.addEventListener('transitionend', remove_transition);
+}
+
+function remove_transition(e) {
+	this.classList.remove('update');
 }

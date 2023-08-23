@@ -51,6 +51,7 @@ span#scissorstext {
 	font-size: 175px;
 	width: 80vw;
 	margin-left: 10vw;
+	transition: color 0.3s;
 
 }
 
@@ -74,4 +75,8 @@ span#scissorstext {
 .button:hover {
 	transform: scale(1.2);
 	box-shadow: 0px 0px 5px 7px lightgrey;
+}
+
+.update {
+	color: grey;
 }
