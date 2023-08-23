@@ -4,14 +4,12 @@ const result = {
 	DRAW: 2
 }
 
-let user_score = 0, computer_score = 0;
+const game_status = {
+	RUNNING: 0,
+	OVER: 1,
+}
 
-const rock = document.querySelector('#rock');
-rock.addEventListener('click', play_rock);
-const paper = document.querySelector('#paper');
-paper.addEventListener('click', play_paper);
-const scissors = document.querySelector('#scissors');
-scissors.addEventListener('click', play_scissors);
+let user_score = 0, computer_score = 0;
 
 function play_rock(_e) {
 	 one_round('rock')
@@ -23,6 +21,7 @@ function play_scissors(_e) {
 	 one_round('scissors')
 }
 
+link_methods();
 
 function get_computer_choice() {
 	const rps = ["rock", "paper", "scissors"];
@@ -69,19 +68,58 @@ function one_round(user_choice) {
 		default:
 			break;
 	}
-}
+	if (update_score() === game_status.OVER) {
+		unlink_methods();
+		const again = document.createElement('div');
+		again.textContent = "AGAIN?";
+		again.classList.add('again');
+		again.addEventListener('click', restart_game);
+		const body = document.querySelector('body');
+		body.insertBefore(again, body.firstChild);
 
-function main() {
-	let i = 0;
-	while (i < 1) {
-		one_round();
-		if (my_score === 3 || computer_score === 3) {
-			break;
-		}
-		i++;
 	}
-	let winner = (user_score > computer_score) ? "you" : (my_score === computer_score) ? "nobody" : "the computer";
-	alert(`game's over! The winner is ${winner}, with a score of ${my_score} : ${computer_score}`);
 }
 
-// main()
+function update_score() {
+	let msg;
+	let game_state = game_status.RUNNING;
+	if (user_score === 3 || computer_score === 3) {
+		msg = (user_score > computer_score) ? "YOU WIN! 🏆" : "THE COMPUTER WINS! 👾";
+		game_state = game_status.OVER;
+	}
+	else {
+		msg = `${user_score} - ${computer_score}`;
+	}
+	const score = document.querySelector('.score');
+	score.textContent = msg;
+	score.style.fontSize = "140px";
+  return game_state;
+}
+
+function restart_game() {
+	link_methods();
+	user_score = 0;
+	computer_score = 0;
+	update_score();
+	const again = document.querySelector('div.again');
+	const body = document.querySelector('body');
+	body.removeChild(again);
+}
+
+function unlink_methods() {
+const rock = document.querySelector('#rock');
+rock.removeEventListener('click', play_rock);
+const paper = document.querySelector('#paper');
+paper.removeEventListener('click', play_paper);
+const scissors = document.querySelector('#scissors');
+scissors.removeEventListener('click', play_scissors);
+}
+
+function link_methods() {
+	const rock = document.querySelector('#rock');
+	rock.addEventListener('click', play_rock);
+	const paper = document.querySelector('#paper');
+	paper.addEventListener('click', play_paper);
+	const scissors = document.querySelector('#scissors');
+	scissors.addEventListener('click', play_scissors);
+}

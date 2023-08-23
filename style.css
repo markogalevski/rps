@@ -1,6 +1,7 @@
 * {
 	font-family: Arial, Helvetica, sans-serif;
-	color: white
+	color: white;
+	user-select: none;
 }
 
 body {
@@ -9,6 +10,21 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	text-align: center;
+}
+
+.again {
+	flex: 1;
+	font-size: 25px;
+	color: #dddddd;
+	align-self: center;
+	padding: 8px;
+	transition: 0.1s;
+	border-radius: 12px;
+}
+
+.again:hover {
+	transform: scale(1.05);
+	box-shadow: 0px 0px 3px 3px #dddddd;
 }
 
 .title-section {
